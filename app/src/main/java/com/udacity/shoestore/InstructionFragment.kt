@@ -31,13 +31,10 @@ class InstructionFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_instruction, container, false)
 
 
-        val args = WelcomeFragmentArgs.fromBundle(arguments!!)
-        val user = args.user
+
         binding.btnInstruction.setOnClickListener {
             findNavController().navigate(
-                InstructionFragmentDirections.actionInstructionFragmentToShoeListFragment(
-                    user
-                )
+                InstructionFragmentDirections.actionInstructionFragmentToShoeListFragment()
             )
         }
 

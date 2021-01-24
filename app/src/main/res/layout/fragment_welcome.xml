@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
-    tools:context=".LoginFragment">
+    tools:context=".WelcomeFragment">
 
     <data>
 
         <variable
-            name="user"
-            type="com.udacity.shoestore.models.User" />
+            name="viewmodel"
+            type="com.udacity.shoestore.ShoeListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="@{`Hi `+user.email+` !`}"
+            android:text="@{`Hi `+viewmodel.curUser.email+` !`}"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

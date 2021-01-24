@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.databinding.FragmentShoeDetailBinding
+import com.udacity.shoestore.models.Shoe
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ShoeDetailFragment : Fragment() {
     lateinit var binding: FragmentShoeDetailBinding
+    private val viewModel: ShoeListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +37,35 @@ class ShoeDetailFragment : Fragment() {
             container,
             false
         )
+        val shoe = Shoe()
+        binding.newShoe = shoe
+
+
+        binding.btnAddShoe.setOnClickListener {
+            if (validateUserInput()) {
+                viewModel.addShoe(shoe)
+                viewModel.onSaveToList()
+
+            }
+        }
+        binding.btnCancel.setOnClickListener {
+            viewModel.onCancelToList()
+        }
+
+
+
+
+        viewModel.navigateToList.observe(viewLifecycleOwner, Observer { isNavigate ->
+            isNavigate?.let {
+                if (isNavigate || !isNavigate) {
+                    findNavController().navigate(
+                        ShoeDetailFragmentDirections.actionShoeDetailFragmentToShoeListFragment()
+                    )
+                    viewModel.doneNavigatingToList()
+                }
+            }
+        })
+
 
 
         return binding.root
@@ -44,7 +78,7 @@ class ShoeDetailFragment : Fragment() {
             binding.etShoeName.setError("name cant be empty")
             return false
         }
-        if (binding.etShoeCompany.text.isNullOrEmpty()) {
+        if (binding.etShoeSize.text.isNullOrEmpty()) {
             binding.etShoeCompany.setError("company cant be empty")
             return false
         }
@@ -55,12 +89,6 @@ class ShoeDetailFragment : Fragment() {
         }
         if (binding.etShoeCompany.text.isNullOrEmpty()) {
             binding.etShoeCompany.setError("company cant be empty")
-            return false
-        }
-
-        if (binding.etShoeImage.text.isNullOrEmpty()) {
-            binding.etShoeCompany.setError("image cant be empty")
-
             return false
         }
         return true

@@ -10,14 +10,36 @@ import com.udacity.shoestore.models.User
 class ShoeListViewModel : ViewModel() {
 
 
-    private val _shoe = MutableLiveData<List<Shoe>>(Shoe.CONSTANT)
+    private val _shoes = MutableLiveData<List<Shoe>>(Shoe.CONSTANT)
 
     val shoes: LiveData<List<Shoe>>
-        get() = _shoe
+        get() = _shoes
 
     val _user = MutableLiveData<User?>()
     val curUser: LiveData<User?>
         get() = _user
+
+
+    fun addShoe(shoe: Shoe) {
+        Shoe.CONSTANT.add(shoe)
+        _shoes.value = Shoe.CONSTANT
+    }
+
+    private val _navigateToList = MutableLiveData<Boolean?>()
+    val navigateToList: LiveData<Boolean?>
+        get() = _navigateToList
+
+    fun doneNavigatingToList() {
+        _navigateToList.value = null
+    }
+
+    fun onSaveToList() {
+        _navigateToList.value = true
+    }
+
+    fun onCancelToList() {
+        _navigateToList.value = false
+    }
 
 
     private val _navigateToDetail = MutableLiveData<Boolean>()
@@ -26,7 +48,7 @@ class ShoeListViewModel : ViewModel() {
         get() = _navigateToDetail
 
 
-    fun doneNavigating() {
+    fun doneNavigatingToDetail() {
         _navigateToDetail.value = false
     }
 
@@ -34,12 +56,14 @@ class ShoeListViewModel : ViewModel() {
         _navigateToDetail.value = true
     }
 
-    fun setUser(user: User) {
-        _user.value = user
-    }
-
     fun onLogOut() {
         _user.value = null
+    }
+
+    fun onCreateUser(email: String, password: String) {
+
+        _user.value = User(email, password)
+
     }
 
 

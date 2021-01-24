@@ -2,20 +2,19 @@ package com.udacity.shoestore
 
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.databinding.FragmentShoeListBinding
+import com.udacity.shoestore.databinding.ItemShoeBinding
 import com.udacity.shoestore.models.Shoe
 
 
 class ShoeListFragment : Fragment() {
     lateinit var binding: FragmentShoeListBinding
-    lateinit var viewModel: ShoeListViewModel
+    private val viewModel: ShoeListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,14 +28,11 @@ class ShoeListFragment : Fragment() {
             false
         )
 
-        viewModel = ViewModelProvider(this).get(ShoeListViewModel::class.java)
-        val args = WelcomeFragmentArgs.fromBundle(arguments!!)
-        viewModel.setUser(args.user)
+
 
         binding.viewmodel = viewModel
-        setHasOptionsMenu(true)
-
         binding.lifecycleOwner = this
+        setHasOptionsMenu(true)
 
         viewModel.shoes.observe(viewLifecycleOwner, Observer { shoes ->
             for (shoe in shoes) {
@@ -48,6 +44,7 @@ class ShoeListFragment : Fragment() {
             isNavigate?.let {
                 if (isNavigate) {
                     findNavController().navigate(ShoeListFragmentDirections.actionShoeListFragmentToShoeDetailFragment())
+                    viewModel.doneNavigatingToDetail()
                 }
             }
         })
@@ -60,25 +57,17 @@ class ShoeListFragment : Fragment() {
         })
 
 
-
-
         return binding.root
 
-        // Inflate the layout for this fragment
     }
 
     private fun addShoeTextView(shoe: Shoe) {
-        val textview = TextView(activity)
 
-        textview.text =
-            "Shoe Item: \n  Name: ${shoe.name}\n Size: ${shoe.size} \n Comapny: ${shoe.company}\n  description: ${shoe.description}\n"
+        val shoeItemBinding: ItemShoeBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_shoe, null, false)
+        shoeItemBinding.shoe = shoe
 
-        textview.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        binding.shoeListContainer.addView(textview)
+        binding.shoeListContainer.addView(shoeItemBinding.root)
 
 
     }

@@ -10,12 +10,14 @@
 
         <TextView
             android:id="@+id/instruction1"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
-            android:text="Step 1:"
+            android:lineSpacingExtra="2dp"
+            android:text="Step 1: login with 1 digit email and passowrd"
             app:layout_constraintBottom_toTopOf="@+id/instruction2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
@@ -25,9 +27,11 @@
 
         <TextView
             android:id="@+id/instruction2"
+
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Step 2:"
+            android:text="Step 2: click every visable button on the screen"
             app:layout_constraintBottom_toTopOf="@+id/instruction3"
             app:layout_constraintEnd_toEndOf="@+id/instruction1"
             app:layout_constraintHorizontal_bias="0.0"
@@ -36,24 +40,16 @@
 
         <TextView
             android:id="@+id/instruction3"
+
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Step 3:"
+            android:text="Step 3: logout and repeat"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="@+id/instruction2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/instruction2"
             app:layout_constraintTop_toBottomOf="@+id/instruction2" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_instruction"
-            tools:src="@tools:sample/avatars" />
 
         <Button
             android:id="@+id/btn_instruction"
@@ -71,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="262dp" />
+            app:layout_constraintGuide_begin="365dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

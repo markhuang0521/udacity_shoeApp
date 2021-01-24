@@ -7,6 +7,12 @@
 
     <data>
 
+        <import type="com.udacity.shoestore.Converter" />
+
+        <variable
+            name="newShoe"
+            type="com.udacity.shoestore.models.Shoe" />
+
         <variable
             name="viewmodel"
             type="com.udacity.shoestore.ShoeListViewModel" />
@@ -18,11 +24,12 @@
 
         <TextView
             android:id="@+id/shoe_name"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="16dp"
-            android:text="name"
+            android:text="Name"
             app:layout_constraintBaseline_toBaselineOf="@+id/et_shoe_name"
             app:layout_constraintEnd_toStartOf="@+id/et_shoe_name"
             app:layout_constraintStart_toStartOf="parent" />
@@ -57,11 +64,13 @@
 
         <EditText
             android:id="@+id/et_shoe_size"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="size"
-            android:inputType="textPersonName"
+            android:inputType="number|textPersonName|numberDecimal"
+            android:text="@={Converter.doubleToString(newShoe.size)}"
             app:layout_constraintBottom_toTopOf="@+id/et_shoe_company"
             app:layout_constraintEnd_toEndOf="@+id/et_shoe_name"
             app:layout_constraintStart_toStartOf="@+id/et_shoe_name"
@@ -77,6 +86,7 @@
             android:ems="10"
             android:hint="name"
             android:inputType="textPersonName"
+            android:text="@={newShoe.name}"
             app:layout_constraintBottom_toTopOf="@+id/et_shoe_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shoe_name"
@@ -84,11 +94,13 @@
 
         <EditText
             android:id="@+id/et_shoe_company"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="company"
             android:inputType="textPersonName"
+            android:text="@={newShoe.company}"
             app:layout_constraintBottom_toTopOf="@+id/et_shoe_desc"
             app:layout_constraintEnd_toEndOf="@+id/et_shoe_size"
             app:layout_constraintStart_toStartOf="@+id/et_shoe_size"
@@ -96,11 +108,13 @@
 
         <EditText
             android:id="@+id/et_shoe_desc"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="description"
             android:inputType="textPersonName"
+            android:text="@={newShoe.description}"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="@+id/et_shoe_company"
             app:layout_constraintStart_toStartOf="@+id/et_shoe_company"

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.shoestore.databinding.FragmentLoginBinding
 
@@ -24,13 +24,14 @@ private const val ARG_PARAM2 = "param2"
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
 
+    private val viewModel: ShoeListViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
-        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         binding.btnLogin.setOnClickListener {
             if (validateUserInput()) {
@@ -49,11 +50,11 @@ class LoginFragment : Fragment() {
             }
         }
 
-        viewModel.user.observe(viewLifecycleOwner, Observer { user ->
+        viewModel.curUser.observe(viewLifecycleOwner, Observer { user ->
             user?.let {
 
                 findNavController().navigate(
-                    LoginFragmentDirections.actionLoginFragmentToWelcomeFragment(user)
+                    LoginFragmentDirections.actionLoginFragmentToWelcomeFragment()
                 )
             }
         })
